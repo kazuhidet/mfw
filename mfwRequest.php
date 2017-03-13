@@ -202,6 +202,9 @@ class mfwRequest {
 			if(isset($_SERVER['HTTP_X_FORWARDED_PROTO'])){
 				$scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'];
 			}
+                        elseif(isset($_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO'])){
+                                $scheme = $_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO'];
+                        }
 			else{
 				$scheme = 'http';
 				if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']==='on'){
@@ -229,8 +232,11 @@ class mfwRequest {
 			self::$url_base = "://{$_SERVER['HTTP_HOST']}{$path}";
 		}
 		if(!$scheme){
-			if(isset($_SERVER['HTTP_X_FORWARDED_PROTO'])){
-				$scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+                        if(isset($_SERVER['HTTP_X_FORWARDED_PROTO'])){
+                                $scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+                        }
+			elseif(isset($_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO'])){
+				$scheme = $_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO'];
 			}
 			else{
 				$scheme = 'http';
