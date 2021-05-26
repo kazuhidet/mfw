@@ -49,11 +49,10 @@ abstract class mfwModules {
 	{
 		$class = static::getActionClass($module,$action);
 		if($class===null){
-			throw new Exception("action class not found: {$module}/{$action}");
+			return array(array(mfwActions::HTTP_404_NOTFOUND),'404 Not Found');
 		}
 
 		if(($err=$class->initialize())){
-			error_log("initializing action failed: {$module}/{$action}");
 			return $err;
 		}
 
